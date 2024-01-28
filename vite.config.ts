@@ -2,9 +2,6 @@ import { fileURLToPath, URL } from 'node:url'
 import { ConfigEnv, defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
-import AutoImport from 'unplugin-auto-import/vite'
-import Components from 'unplugin-vue-components/vite'
-import { ArcoResolver } from 'unplugin-vue-components/resolvers'
 
 import electron from 'vite-plugin-electron'
 import renderer from 'vite-plugin-electron-renderer'
@@ -39,41 +36,6 @@ export default (configEnv: ConfigEnv) => {
             }),
             vueJsx(),
             // 按需导入
-            AutoImport({
-                // targets to transform
-                include: [
-                    /\.[tj]sx?$/, // .ts, .tsx, .js, .jsx
-                    /\.vue$/,
-                    /\.vue\?vue/, // .vue
-                    /\.md$/ // .md
-                ],
-
-                // global imports to register
-                imports: ['vue', 'vue-router', 'pinia'],
-
-                // Filepath to generate corresponding .d.ts file.
-                // Defaults to './auto-imports.d.ts' when `typescript` is installed locally.
-                // Set `false` to disable.
-                dts: './auto-imports.d.ts',
-
-                // Inject the imports at the end of other imports
-                injectAtEnd: true,
-
-                // Generate corresponding .eslintrc-auto-import.json file.
-                // eslint globals Docs - https://eslint.org/docs/user-guide/configuring/language-options#specifying-globals
-                eslintrc: {
-                    enabled: true, // Default `false`
-                    filepath: './.eslintrc-auto-import.json' // Default `./.eslintrc-auto-import.json`
-                },
-                resolvers: [ArcoResolver()]
-            }),
-            Components({
-                resolvers: [
-                    ArcoResolver({
-                        sideEffect: true
-                    })
-                ]
-            }),
             electron([
                 {
                     // Main-Process entry file of the Electron App.

@@ -7,7 +7,6 @@
 import axios from 'axios'
 import type { AxiosResponse, AxiosInstance, AxiosRequestConfig, CreateAxiosDefaults } from 'axios'
 import { useUserStore } from '@/stores'
-import { Message } from '@arco-design/web-vue'
 
 /**
  * @Description: 请求响应接口
@@ -63,11 +62,9 @@ class Request {
                 return Promise.resolve(res.data)
             } else if (code === 401) {
                 userLogout()
-                Message.warning('登录已过期，请重新登录')
                 return Promise.reject(res.data)
             } else {
                 if (showError) {
-                    Message.error(res.data.message || '服务繁忙，请重试~')
                 }
                 return Promise.reject(res.data)
             }

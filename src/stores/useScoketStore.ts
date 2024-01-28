@@ -1,6 +1,5 @@
 import { defineStore } from 'pinia'
 import { io } from 'socket.io-client'
-import { Message } from '@arco-design/web-vue'
 
 export const useSocketStore: any = defineStore('useSocketStore', () => {
     // forceNew开启命名空间，query携带用户token
@@ -15,10 +14,10 @@ export const useSocketStore: any = defineStore('useSocketStore', () => {
 
     socket.on('playing', (e) => {
         console.log('playing', e)
-        Message.success('playing')
     })
 
-    const play = (data) => {
+    const play = (data: any) => {
+        console.log('play --->', data)
         socket.emit('play', data)
     }
 
